@@ -6,13 +6,12 @@ angular.module('ColorAPI')
         homeController
     ])
 
-function homeController($scope,$http) {
+function homeController($scope, $http) {
     var hCtrl = this;
     hCtrl.userColor = '';
 
     hCtrl.colorInfo = [];
 
-    hCtrl.welcomeMessage = 'The only place for delicious nougat.';
     var autoColor = [];
     //get function that retrieves information from our server
     //once the information is retrieved , it is then pushed to an array called "hCtrl.colorInfo"
@@ -31,7 +30,7 @@ function homeController($scope,$http) {
                     // console.log(hCtrl.colorInfo);
             });
 
-        console.log('Such colors! Much wow!');
+        console.log('API connected');
 
     }
 
@@ -43,40 +42,26 @@ function homeController($scope,$http) {
 
     hCtrl.titleBackground = '';
 
-    hCtrl.scopeColor ='';
-
-
-
-
-
+    hCtrl.scopeColor = '';
 
     $(function() {
         $("#tags").autocomplete({
             source: autoColor,
-            select: function( event, ui ) {
-              // console.log('click click', ui)
+            select: function(event, ui) {
 
-            hCtrl.scopeColor = ui.item.label;
-            hCtrl.userColor = '';
-              // console.log(hCtrl.scopeColor)
-            // $('#tags').on(click,hCtrl.matchTheColor())   ;
-            //
-            // $scope.$apply()
-            // console.log('!')
-            hCtrl.matchTheColor ();
-            $scope.$apply()
-
+                hCtrl.scopeColor = ui.item.label;
+                hCtrl.userColor = '';
+                hCtrl.matchTheColor();
+                $scope.$apply()
             }
         });
     });
 
-
     //matchTheValues takes in the values that are inputed into the text fields and set to variables
     hCtrl.matchTheColor = function() {
-        var color = hCtrl.userColor.toLowerCase() || hCtrl.scopeColor.toLowerCase() ;
+        var color = hCtrl.userColor.toLowerCase() || hCtrl.scopeColor.toLowerCase();
         var hex = hCtrl.hexValues;
         var rgb = hCtrl.rgbValues;
-
 
         // console.log(color, hex, rgb);
         //once the inputs have values, then use the for each method on our colorInfo array to compare the input value to the array value
@@ -123,41 +108,6 @@ function homeController($scope,$http) {
                     hCtrl.titleBackground = 'white';
                 };
             } else {}
-
         })
     };
-    //rgb color selector put on backburner
-    //
-    // hCtrl.matchTheRGB = function() {
-    //     var color = hCtrl.userColor.toLowerCase();
-    //     var hex = hCtrl.hexValues;
-    //     var rgb = hCtrl.rgbValues;
-    //
-    //     console.log(color, hex, rgb);
-    //
-    //     hCtrl.colorInfo.forEach(function(item) {
-    //         if (rgb == item.rgb) {
-    //             console.log('Success!', item);
-    //             hCtrl.userColor = item.name;
-    //             hCtrl.hexValues = "#" + item.hex;
-    //             hCtrl.rgbValues = item.rgb.r + ", " + item.rgb.g + ", " + item.rgb.b;
-    //             hCtrl.titleColor = hCtrl.hexValues;
-    //             console.log(hCtrl.rgbValues)
-    //         }
-    //     })
-    // };
-  //   function test(){
-  //     hCtrl.message = 'test'
-  //   $(function() {
-  //       $("#tags").autocomplete({
-  //           source: autoColor,
-  //           select: function( event, ui ) {
-  //             console.log('click click', ui,$scope)
-  //           }
-  //       });
-  //   });
-  //   console.log(hCtrl.message)
-  // }
-  // test()
-
 }
