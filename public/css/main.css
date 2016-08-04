@@ -1,0 +1,12 @@
+html{
+  background-color:lightgray;
+}
+.contain{
+  border:2px #444 solid;
+}
+#colorBox{
+  background-color:black;
+  height:40px;
+  width:40px;
+  display:absolute;
+}
