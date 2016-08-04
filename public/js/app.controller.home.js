@@ -1,11 +1,12 @@
 //app.controller.home.js
 angular.module('ColorAPI')
     .controller('homeController', [
+        '$scope',
         '$http',
         homeController
     ])
 
-function homeController($http) {
+function homeController($scope,$http) {
     var hCtrl = this;
     hCtrl.userColor = '';
 
@@ -38,28 +39,54 @@ function homeController($http) {
 
     hCtrl.userColor = '';
 
-    hCtrl.titleColor = '';
+    hCtrl.titleColor = [];
 
     hCtrl.titleBackground = '';
 
+    hCtrl.scopeColor ='';
 
-    console.log(hCtrl.autoColor)
+
+
+
+
+
+    $(function() {
+        $("#tags").autocomplete({
+            source: autoColor,
+            select: function( event, ui ) {
+              // console.log('click click', ui)
+
+            hCtrl.scopeColor = ui.item.label;
+            hCtrl.userColor = '';
+              // console.log(hCtrl.scopeColor)
+            // $('#tags').on(click,hCtrl.matchTheColor())   ;
+            //
+            // $scope.$apply()
+            // console.log('!')
+            hCtrl.matchTheColor ();
+            $scope.$apply()
+
+            }
+        });
+    });
+
 
     //matchTheValues takes in the values that are inputed into the text fields and set to variables
     hCtrl.matchTheColor = function() {
-        // console.log(hCtrl.userColor);
-        var color = hCtrl.userColor.toLowerCase();
+        var color = hCtrl.userColor.toLowerCase() || hCtrl.scopeColor.toLowerCase() ;
         var hex = hCtrl.hexValues;
         var rgb = hCtrl.rgbValues;
 
-        console.log(color, hex, rgb);
+
+        // console.log(color, hex, rgb);
         //once the inputs have values, then use the for each method on our colorInfo array to compare the input value to the array value
         hCtrl.colorInfo.forEach(function(item) {
+
             if (color == item.name.toLowerCase()) {
                 console.log('Success!', item);
                 hCtrl.hexValues = "#" + item.hex;
                 hCtrl.rgbValues = item.rgb.r + ", " + item.rgb.g + ", " + item.rgb.b;
-                hCtrl.titleColor = hCtrl.userColor;
+                hCtrl.titleColor = color;
 
                 var luminosity = hCtrl.userColor;
                 if (luminosity == 'white') {
@@ -119,10 +146,18 @@ function homeController($http) {
     //         }
     //     })
     // };
+  //   function test(){
+  //     hCtrl.message = 'test'
+  //   $(function() {
+  //       $("#tags").autocomplete({
+  //           source: autoColor,
+  //           select: function( event, ui ) {
+  //             console.log('click click', ui,$scope)
+  //           }
+  //       });
+  //   });
+  //   console.log(hCtrl.message)
+  // }
+  // test()
 
-    $(function() {
-        $("#tags").autocomplete({
-            source: autoColor
-        });
-    });
 }
