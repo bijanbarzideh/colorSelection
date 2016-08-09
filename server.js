@@ -33,5 +33,5 @@ app.get('/api/colors', function(req, res) {
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
-    console.log(`Server online, human. Port: ${port}`);
+    console.log(`Server online. Port: ${port}`);
 })
